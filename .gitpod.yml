@@ -3,11 +3,25 @@
 # and commit this file to your remote git repository to share the goodness with others.
 
 tasks:  
-  - name: Install Composer and Run Sail
-    init: composer install && cp .env.example .env && php artisan key:generate
-    command: ./vendor/bin/sail up -d && ./vendor/bin/sail artisan migrate --force && npm run dev
   - name: Install NPM
-    init: npm install && npm run build    
+    init: |      
+      npm install
+      npm run build    
+
+  - name: Install Composer and Run Sail
+    init: |
+      cp .env.example .env
+      composer install      
+      php artisan key:generate      
+    command: |
+      ./vendor/bin/sail up -d
+      gp sync-done install
+      
+  - name: Database Migration    
+    command: |
+      gp sync-await install
+      ./vendor/bin/sail artisan migrate --force
+  
 github:
   prebuilds:
     master: true
