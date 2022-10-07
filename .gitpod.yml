@@ -4,8 +4,10 @@
 
 tasks:  
   - name: Install Composer and Run Sail
-    init: composer install && cp .env.example .env && php artisan key:generate && ./vendor/bin/sail up -d && ./vendor/bin/sail artisan migrate --force
-
+    init: composer install && cp .env.example .env && php artisan key:generate
+    command: ./vendor/bin/sail up -d && ./vendor/bin/sail artisan migrate --force && npm run dev
+  - name: Install NPM
+    init: npm install && npm run build    
 github:
   prebuilds:
     master: true
