@@ -14,12 +14,7 @@ tasks:
       composer install      
       php artisan key:generate      
       ./vendor/bin/sail up -d
-      gp sync-done install    
-      
-  - name: Database Migration    
-    init: |
-      gp sync-await install
-      ./vendor/bin/sail artisan migrate --force
+      ./vendor/bin/sail artisan migrate --force 
   
 github:
   prebuilds:
