@@ -13,12 +13,11 @@ tasks:
       cp .env.example .env
       composer install      
       php artisan key:generate      
-    command: |
       ./vendor/bin/sail up -d
-      gp sync-done install
+      gp sync-done install    
       
   - name: Database Migration    
-    command: |
+    init: |
       gp sync-await install
       ./vendor/bin/sail artisan migrate --force
   
